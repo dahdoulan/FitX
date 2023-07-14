@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1085282893101",
+    "project_id": "fitx-flutter-x",
+    "storage_bucket": "fitx-flutter-x.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1085282893101:android:766db5861bec3d2a0da7a4",
+        "android_client_info": {
+          "package_name": "com.example.fitx_flutter_2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1085282893101-lec5fqnlfnodti1keghes5ht86dnrhf6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3LywM8Hil0KB59KmnZRtTmRMZ4q5l6HE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1085282893101-lec5fqnlfnodti1keghes5ht86dnrhf6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
