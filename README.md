@@ -2,6 +2,9 @@
 
 A workout journal that helps the user to track their progress in the gym.
 
-![Screenshot_1694552228](https://github.com/dahdoulan/FitX/assets/91602583/52f63719-d641-4729-ba37-12770b1881ea) ![Screenshot_1694552178](https://github.com/dahdoulan/FitX/assets/91602583/41992efa-60ed-459d-9b52-42cf3cfd654f)![Screenshot_1694552185](https://github.com/dahdoulan/FitX/assets/91602583/b0158ac7-befe-4e22-87a7-a387077f7a69)
+![Screenshot 2023-09-13 00-06-24](https://github.com/dahdoulan/FitX/assets/91602583/2ecf5118-f3b5-4773-a0ab-d941572e609a)
+![Screenshot 2023-09-13 00-06-38](https://github.com/dahdoulan/FitX/assets/91602583/6aa3d9a6-be7f-45d8-93e3-9ae634bc0db4)
+![Screenshot 2023-09-13 00-06-57](https://github.com/dahdoulan/FitX/assets/91602583/cbfe9c85-10a1-4eaf-a941-624c8c28b19a)
+
 
 
