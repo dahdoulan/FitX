@@ -11,102 +11,103 @@ class LogIn extends StatelessWidget {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
 
-  final _emailFormKey = GlobalKey<FormState>();
-
   @override
   Widget build(BuildContext context) {
     return Consumer2<AuthProvider, UserProvider>(
       builder: (context, auth, user, child) {
-        return Container(
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: AssetImage(
-                      'assets/images/pexels-murilo-botelho-1865131.JPG'))),
-          child: Scaffold(
-            backgroundColor: Colors.transparent,
-            body: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
+        return Scaffold(
+          backgroundColor: kMoove,
+          body: SingleChildScrollView(
+            physics: const NeverScrollableScrollPhysics(),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Container(
-                  height: 400.0,
-                  decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                          begin: Alignment.topRight,
-                          end: Alignment.bottomLeft,
-                          colors: [
-                            kBlack.withOpacity(0.6),
-                            kMoove,
-                          ]),
-                      borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(8.0),
-                          topLeft: Radius.circular(8.0))),
-                  child: Form(
-                    child: Column(
-                      //mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        SizedBox(
-                          height: 5.0,
+                Form(
+                  child: Column(
+                    children: <Widget>[
+                      SizedBox(
+                        height: 20.0,
+                      ),
+                      Center(
+                        child: Image.asset(
+                          './assets/images/undraw.png',
+                          width: 300.0,
                         ),
-                        Text(
-                          'Log In',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 30.0,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'big_noodle_titling',
-                              shadows: [kBoxShadow3]),
-                        ),
-                        SizedBox(
-                          height: 20.0,
-                        ),
-                        CustomTextField(
-                          controller: _emailController,
-                          validator: (email) =>
-                              email == null || !EmailValidator.validate(email)
-                                  ? 'Invalid Email.'
-                                  : null,
-                          label: 'Email',
-                        ),
-                        SizedBox(
-                          height: 15.0,
-                        ),
-                        CustomTextField(
-                            validator: (password) => password!.length < 8 ||
-                                    password == null
-                                ? 'Password should contain 8 characters or more.'
+                      ),
+                      SizedBox(
+                        height: 5.0,
+                      ),
+                      Text(
+                        'Log In',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 30.0,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'big_noodle_titling',
+                            shadows: [kBoxShadow3]),
+                      ),
+                      SizedBox(
+                        height: 20.0,
+                      ),
+                      CustomTextField(
+                        controller: _emailController,
+                        validator: (email) =>
+                            email == null || !EmailValidator.validate(email)
+                                ? 'Invalid Email.'
                                 : null,
-                            label: 'Password',
-                            controller: _passwordController),
-                        SizedBox(
-                          height: 15.0,
-                        ),
-                        Container(
-                          height: 50.0,
-                          width: 200.0,
-                          decoration: BoxDecoration(
-                              color: kYellow,
-                              boxShadow: [kBoxShadow3],
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(8.0))),
-                          child: TextButton(
-                            onPressed: () => auth.logIn(
+                        label: 'Email',
+                        obscureText: false,
+                      ),
+                      SizedBox(
+                        height: 15.0,
+                      ),
+                      CustomTextField(
+                        validator: (password) => password!.length < 8
+                            ? 'Password should contain 8 characters or more.'
+                            : null,
+                        label: 'Password',
+                        controller: _passwordController,
+                        obscureText: true,
+                      ),
+                      SizedBox(
+                        height: 15.0,
+                      ),
+                      Container(
+                        height: 50.0,
+                        width: 200.0,
+                        decoration: BoxDecoration(
+                            color: kYellow,
+                            boxShadow: [kBoxShadow3],
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(8.0))),
+                        child: TextButton(
+                          onPressed: () async {
+                            showDialog(
+                              context: context,
+                              builder: (context) => Center(
+                                child: CircularProgressIndicator(
+                                  color: kYellow,
+                                ),
+                              ),
+                            );
+                            await auth.logIn(
                               _emailController.text.trim(),
                               _passwordController.text.trim(),
-                            ),
-                            child: Text(
-                              'Log In',
-                              style: TextStyle(
-                                  color: kMoove,
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'big_noodle_titling',
-                                  shadows: [kBoxShadow2]),
-                            ),
+                            );
+                            Navigator.pop(context);
+                          },
+                          child: Text(
+                            'Log In',
+                            style: TextStyle(
+                                color: kMoove,
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'big_noodle_titling',
+                                shadows: [kBoxShadow2]),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ],

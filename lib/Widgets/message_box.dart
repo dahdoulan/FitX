@@ -12,6 +12,17 @@ class MessageBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      actions: [
+        TextButton(
+            onPressed: () => Navigator.popUntil(
+                  context,
+                  (route) => route.isFirst,
+                ),
+            child: Text(
+              'Ok',
+              style: kMessageBoxTextStyle,
+            )),
+      ],
       backgroundColor: kYellow,
       title: Text(
         text,

@@ -1,7 +1,6 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:fitx_flutter_2/Providers/workout_provider.dart';
 import 'package:fitx_flutter_2/Providers/exercise_names.dart';
-
 import 'package:flutter/material.dart';
 import 'package:fitx_flutter_2/Models/exercise.dart';
 import 'package:fitx_flutter_2/constants.dart';
@@ -15,8 +14,6 @@ class ExcerciseTile extends StatelessWidget {
     _excercise = excercise;
   }
   Exercise _excercise = Exercise();
-
-  TextEditingController _labelController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -61,41 +58,52 @@ class ExcerciseTile extends StatelessWidget {
                   Radius.circular(20.0),
                 ),
               ),
-              // height: 100.0,
-              // width: 100.0,
               child: Column(
                 //This column is to format the title and the text fields for the input.
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
                 children: <Widget>[
-                  // Text(
-                  //   "Excercise name",
-
-                  // ),
-
                   Container(
                     padding: EdgeInsets.only(left: 50.0),
                     width: double.infinity,
-                    child: DropdownSearch<String>(
-                      popupProps: PopupProps.modalBottomSheet(
-                        showSearchBox: true,
-                        showSelectedItems: true,
-                      ),
-                      dropdownDecoratorProps: DropDownDecoratorProps(
-                        textAlign: TextAlign.center,
-                        baseStyle: kInputTextStyle,
-                        dropdownSearchDecoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: '${_excercise.getName}',
-                          hintStyle: kInputTextStyle,
+                    child: Theme(
+                      data: ThemeData(
+                        textTheme: TextTheme(
+                          titleMedium: TextStyle(color: kYellow),
                         ),
                       ),
-                      onChanged: (exerciseName) => workoutProvider
-                          .setExerciseName(_excercise, exerciseName!),
-                      items: workouts.getWorkouts,
+                      child: DropdownSearch<String>(
+                        popupProps: PopupProps.modalBottomSheet(
+                          searchFieldProps: TextFieldProps(
+                            cursorColor: kYellow,
+                            decoration: InputDecoration(
+                                hintText: 'Search...',
+                                hintStyle: kInputTextStyle),
+                            style: TextStyle(color: kYellow),
+                          ),
+                          showSearchBox: true,
+                          showSelectedItems: true,
+                          modalBottomSheetProps: ModalBottomSheetProps(
+                            backgroundColor: kMoove,
+                          ),
+                        ),
+                        dropdownButtonProps:
+                            DropdownButtonProps(color: kYellow),
+                        dropdownDecoratorProps: DropDownDecoratorProps(
+                          textAlign: TextAlign.center,
+                          baseStyle: kInputTextStyle,
+                          dropdownSearchDecoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: '${_excercise.getName}',
+                            hintStyle: kInputTextStyle,
+                          ),
+                        ),
+                        onChanged: (exerciseName) => workoutProvider
+                            .setExerciseName(_excercise, exerciseName!),
+                        items: workouts.getWorkouts,
+                      ),
                     ),
                   ),
-
                   Wrap(
                     //A wrapper for the exercise sets in each workout.
                     children: workoutProvider.getExerciseSets(_excercise),

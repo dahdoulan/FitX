@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
 
-import '../Models/favorites.dart';
-
 import '../constants.dart';
 
 class CustomListTiles extends StatelessWidget {
-  Favorite? _fav;
   String? _leading = '';
   var _trailing;
   CustomListTiles({required leading, required trailing, fav})
       : _leading = leading,
-        _trailing = trailing,
-        _fav = fav;
+        _trailing = trailing;
 
   @override
   Widget build(BuildContext context) {

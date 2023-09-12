@@ -5,6 +5,7 @@ import 'package:fitx_flutter_2/Providers/user_provider.dart';
 
 import 'package:fitx_flutter_2/Providers/workout_provider.dart';
 import 'package:fitx_flutter_2/Providers/exercise_names.dart';
+import 'package:fitx_flutter_2/Widgets/message_box.dart';
 import 'package:fitx_flutter_2/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -31,35 +32,69 @@ class LogsScreen extends StatelessWidget {
                   width: 300.0,
                   decoration:
                       BoxDecoration(boxShadow: [kBoxShadow], color: kMoove),
-                  child: DropdownSearch<String>(
-                    dropdownDecoratorProps: DropDownDecoratorProps(
-                      textAlign: TextAlign.center,
-                      baseStyle: kInputTextStyle,
-                      dropdownSearchDecoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: 'Select an exercise',
-                        hintStyle: kInputTextStyle,
+                  child: Theme(
+                    data: ThemeData(
+                      textTheme: TextTheme(
+                        titleMedium: TextStyle(color: kYellow),
                       ),
                     ),
-                    items: workouts.getWorkouts,
-                    popupProps: PopupProps.modalBottomSheet(
-                      modalBottomSheetProps: ModalBottomSheetProps(
-                        backgroundColor: kYellow,
-                        elevation: 10.0,
+                    child: DropdownSearch<String>(
+                      dropdownButtonProps: DropdownButtonProps(
+                        color: kYellow,
                       ),
-                      showSearchBox: true,
-                    ),
-                    onChanged: (value) async {
-                      _selectedWorkout = value;
-                      await db.readSets(
-                        context: context,
-                        exercise: _selectedWorkout,
-                        email: user.getEmail,
-                        queryWorkouts: workoutProvider.getQueryList(),
-                      );
+                      dropdownDecoratorProps: DropDownDecoratorProps(
+                        textAlign: TextAlign.center,
+                        baseStyle: kInputTextStyle,
+                        dropdownSearchDecoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Select an exercise',
+                          hintStyle: kInputTextStyle,
+                        ),
+                      ),
+                      popupProps: PopupProps.modalBottomSheet(
+                        searchFieldProps: TextFieldProps(
+                          cursorColor: kYellow,
+                          decoration: InputDecoration(
+                              hintText: 'Search...',
+                              hintStyle: kInputTextStyle),
+                          style: TextStyle(color: kYellow),
+                        ),
+                        modalBottomSheetProps: ModalBottomSheetProps(
+                          backgroundColor: kMoove,
+                          elevation: 10.0,
+                        ),
+                        showSearchBox: true,
+                      ),
+                      onChanged: (value) async {
+                        try {
+                          showDialog(
+                            context: context,
+                            builder: (context) => Center(
+                              child: CircularProgressIndicator(
+                                color: kYellow,
+                              ),
+                            ),
+                          );
+                          _selectedWorkout = value;
+                          await db.readSets(
+                            exercise: _selectedWorkout,
+                            email: user.getEmail,
+                            queryWorkouts: workoutProvider.getQueryList(),
+                          );
 
-                      chart.readFlSpots(workoutProvider.getQueryList());
-                    },
+                          chart.readFlSpots(workoutProvider.getQueryList());
+                          Navigator.pop(context);
+                        } catch (ex) {
+                          showDialog<void>(
+                            context: context,
+                            builder: (context) => MessageBox(
+                              ex.toString(),
+                            ),
+                          );
+                        }
+                      },
+                      items: workouts.getWorkouts,
+                    ),
                   ),
                 ),
                 Container(

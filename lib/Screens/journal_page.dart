@@ -1,8 +1,8 @@
 import 'package:fitx_flutter_2/Providers/auth.dart';
 import 'package:fitx_flutter_2/Providers/firebase_db.dart';
-import 'package:fitx_flutter_2/Providers/hive_db.dart';
 import 'package:fitx_flutter_2/Providers/user_provider.dart';
 import 'package:fitx_flutter_2/Providers/workout_provider.dart';
+import 'package:fitx_flutter_2/Widgets/message_box.dart';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
@@ -88,27 +88,63 @@ class _JournalPageState extends State<JournalPage> {
                     floating: true,
                     pinned: true,
                     actions: [
-                      TextButton(
-                          onPressed: () {
-                            final box = HiveDb();
-                            db.saveExercises(
-                              context,
-                              workoutProvider.getExercises,
-                              user.getEmail,
-                            );
-
-                            //   box.setValue(
-                            //       'Exercies', workoutProvider.getExercises);
+                      TextButton.icon(
+                          label: Text(''),
+                          onPressed: () async {
+                            try {
+                              showDialog(
+                                context: context,
+                                builder: (context) => Center(
+                                  child: CircularProgressIndicator(
+                                    color: kYellow,
+                                  ),
+                                ),
+                              );
+                              await db.saveExercises(
+                                workoutProvider.getExercises,
+                                user.getEmail,
+                              );
+                              showDialog<void>(
+                                context: context,
+                                builder: (context) =>
+                                    MessageBox('Uploaded data successfuly !'),
+                              );
+                              Navigator.pop(context);
+                            } catch (e) {
+                              showDialog<void>(
+                                context: context,
+                                builder: (context) => MessageBox(
+                                  e.toString(),
+                                ),
+                              );
+                            }
                           },
-                          child: Icon(
-                            Icons.save_alt_outlined,
-                            color: kYellow,
+                          icon: Column(
+                            children: [
+                              Icon(
+                                Icons.save_alt_outlined,
+                                color: kYellow,
+                              ),
+                              Text(
+                                'Save',
+                                style: TextStyle(color: kYellow),
+                              ),
+                            ],
                           )),
-                      TextButton(
+                      TextButton.icon(
+                          label: Text(''),
                           onPressed: () => auth.logOut(),
-                          child: Icon(
-                            Icons.logout_outlined,
-                            color: kYellow,
+                          icon: Column(
+                            children: [
+                              Icon(
+                                Icons.logout_outlined,
+                                color: kYellow,
+                              ),
+                              Text(
+                                'Log out',
+                                style: TextStyle(color: kYellow),
+                              ),
+                            ],
                           )),
                     ]),
 
@@ -134,9 +170,7 @@ class _JournalPageState extends State<JournalPage> {
               color: kMoove,
             ),
             backgroundColor: kYellow,
-            onPressed: () {
-              workoutProvider.addExercise(Exercise());
-            },
+            onPressed: () => workoutProvider.addExercise(Exercise()),
           ),
         );
       },

@@ -47,6 +47,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                         CustomTextField(
                           label: 'Name',
                           controller: _controller,
+                          obscureText: false,
                         ),
                         SizedBox(height: 20.0),
                         TextButton(

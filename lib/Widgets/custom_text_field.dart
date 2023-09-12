@@ -2,17 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:fitx_flutter_2/constants.dart';
 
 class CustomTextField extends StatefulWidget {
-  CustomTextField({
-    String? Function(String?)? validator,
-    required String label,
-    required TextEditingController controller,
-  })  : _controller = controller,
+  CustomTextField(
+      {String? Function(String?)? validator,
+      required String label,
+      required TextEditingController controller,
+      required bool obscureText})
+      : _controller = controller,
         _label = label,
-        _validator = validator;
+        _validator = validator,
+        _obsecure = obscureText;
 
   final TextEditingController _controller;
   final String _label;
   final String? Function(String?)? _validator;
+  final bool _obsecure;
   GlobalKey<FormState>? formKey;
 
   @override
@@ -47,6 +50,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           textAlign: TextAlign.center,
           cursorHeight: 25.0,
           cursorColor: kMoove,
+          obscureText: widget._obsecure,
           style: TextStyle(
             fontFamily: 'big_noodle_titling',
             color: kMoove,
